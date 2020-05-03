@@ -251,7 +251,7 @@ def plot_avg_j(avg_J):
     plot(range(len(avg_J)), avg_J)
     xlabel("Iterations")
     ylabel("Average Cross Entropy")
-    show()
+    savefig('cross.png', bbox_inches='tight')
 
 
 def main():
@@ -270,7 +270,7 @@ def main():
     test_accuracy, confuse_mat = test_network(test_X, test_labels, weights)
     print("Testing Accuracy:", test_accuracy)
     print("Confusion Matrix:\n", confuse_mat)
-    # plot_avg_j(avg_J)
+    plot_avg_j(avg_J)
 
 
 if __name__ == "__main__":
