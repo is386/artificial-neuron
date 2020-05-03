@@ -7,7 +7,7 @@
 from os import listdir
 from os.path import isfile, join
 from PIL import Image
-from matplotlib.pyplot import plot, show, xlabel, ylabel
+from matplotlib.pyplot import plot, show, xlabel, ylabel, savefig
 import numpy as np
 
 YALE_PATH = "./yalefaces/"
