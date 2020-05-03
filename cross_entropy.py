@@ -33,23 +33,26 @@ def parse_yale_faces():
     """
     data_matrix = []
     yale_faces = [i for i in listdir(
-        YALE_PATH) if isfile(join(YALE_PATH, i))][1:]
+        YALE_PATH) if isfile(join(YALE_PATH, i))]
 
     for face in yale_faces:
-        face_img = Image.open(join(YALE_PATH, face))
-        face_img = face_img.resize((IMAGE_X, IMAGE_Y))
-        pixels = np.asarray(face_img).flatten()
-        pixels = np.insert(pixels, 0, BIAS)
-        face_img.close()
-        sub_n = parse_subj_num(face)
-        pixels = np.append(pixels, sub_n)
-        data_matrix.append(pixels)
+        try:
+            face_img = Image.open(join(YALE_PATH, face))
+            face_img = face_img.resize((IMAGE_X, IMAGE_Y))
+            pixels = np.asarray(face_img).flatten()
+            pixels = np.insert(pixels, 0, BIAS)
+            face_img.close()
+            sub_n = parse_subj_num(face)
+            pixels = np.append(pixels, sub_n)
+            data_matrix.append(pixels)
 
-        # saves each class and its total
-        if sub_n not in classes:
-            classes[sub_n] = 1
-        else:
-            classes[sub_n] += 1
+            # saves each class and its total
+            if sub_n not in classes:
+                classes[sub_n] = 1
+            else:
+                classes[sub_n] += 1
+        except OSError:
+            pass
 
     return np.asarray(data_matrix)
 
@@ -252,6 +255,7 @@ def plot_avg_j(avg_J):
 
 
 def main():
+    np.random.seed(SEED)
     data_mat = parse_yale_faces()
     train_X, train_Y, test_X, test_Y = split_data(data_mat)
     standardize(train_X, test_X)
@@ -266,9 +270,8 @@ def main():
     test_accuracy, confuse_mat = test_network(test_X, test_labels, weights)
     print("Testing Accuracy:", test_accuracy)
     print("Confusion Matrix:\n", confuse_mat)
-    plot_avg_j(avg_J)
+    # plot_avg_j(avg_J)
 
 
 if __name__ == "__main__":
-    np.random.seed(SEED)
     main()
