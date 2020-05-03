@@ -35,23 +35,26 @@ def parse_yale_faces():
     """
     data_matrix = []
     yale_faces = [i for i in listdir(
-        YALE_PATH) if isfile(join(YALE_PATH, i))][1:]
+        YALE_PATH) if isfile(join(YALE_PATH, i))]
 
     for face in yale_faces:
-        face_img = Image.open(join(YALE_PATH, face))
-        face_img = face_img.resize((IMAGE_X, IMAGE_Y))
-        pixels = np.asarray(face_img).flatten()
-        pixels = np.insert(pixels, 0, BIAS)
-        face_img.close()
-        sub_n = parse_subj_num(face)
-        pixels = np.append(pixels, sub_n)
-        data_matrix.append(pixels)
+        try:
+            face_img = Image.open(join(YALE_PATH, face))
+            face_img = face_img.resize((IMAGE_X, IMAGE_Y))
+            pixels = np.asarray(face_img).flatten()
+            pixels = np.insert(pixels, 0, BIAS)
+            face_img.close()
+            sub_n = parse_subj_num(face)
+            pixels = np.append(pixels, sub_n)
+            data_matrix.append(pixels)
 
-        # saves each class and its total
-        if sub_n not in classes:
-            classes[sub_n] = 1
-        else:
-            classes[sub_n] += 1
+            # saves each class and its total
+            if sub_n not in classes:
+                classes[sub_n] = 1
+            else:
+                classes[sub_n] += 1
+        except OSError:
+            pass
 
     return np.asarray(data_matrix)
 
