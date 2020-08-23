@@ -12,7 +12,7 @@ This is an artificial neuron built from scratch. It uses a logistic activation f
 
 ### Python Dependencies
 
-- `PIL`
+- `pillow`
 - `numpy`
 - `matplotlib`
 - `seaborn`
@@ -20,21 +20,21 @@ This is an artificial neuron built from scratch. It uses a logistic activation f
 
 ## Hyper Parameters
 
-- Learning Rate: 0.0001
+- Learning Rate: `0.0001`
 
-- Termination Criteria: 100 iterations
+- Termination Criteria: `100 iterations`
 
-- L2 Regularization Term: 0.5
+- L2 Regularization Term: `0.5`
 
-- Bias: 1
+- Bias: `1`
 
-- Batch Size: 8
+- Batch Size: `8`
 
 ## Results
 
 ### Accuracy:
 
-Testing Accuracy: 95.24%
+Testing Accuracy: `95.24%`
 
 ### Average Log Likelihood:
 
