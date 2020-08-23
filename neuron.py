@@ -1,16 +1,10 @@
-# is386
-# is386
-# CS615
-# HW 1
-# Question 3
-
-
 from os import listdir
 from os.path import isfile, join
 from PIL import Image
 import numpy as np
-from matplotlib.pyplot import plot, show, xlabel, ylabel, savefig
-
+import matplotlib.pyplot as plt
+import seaborn as sn
+import pandas as pd
 
 YALE_PATH = "./yalefaces/"
 IMAGE_X = 40
@@ -19,10 +13,10 @@ SEED = 11519991
 
 # Hyper Parameters
 LEARNING_RATE = 0.0001
-TERM_CRITERIA = 300
+TERM_CRITERIA = 100
 REG_TERM = 0.5
 BIAS = 1
-BATCH_SIZE = 4
+BATCH_SIZE = 8
 
 classes = {}
 
@@ -253,10 +247,29 @@ def plot_avg_j(avg_J):
 
     :param avg_J: `numpy.ndarray` test data
     """
-    plot(range(len(avg_J)), avg_J)
-    xlabel("Iterations")
-    ylabel("Average Log Likelihood")
-    savefig('log_like.png', bbox_inches='tight')
+    plt.plot(range(len(avg_J)), avg_J)
+    plt.xlabel("Iterations")
+    plt.ylabel("Average Log Likelihood")
+    plt.savefig('log.png', bbox_inches='tight')
+    plt.close()
+
+
+def plot_confuse(confuse_mat):
+    """
+    Plots the confusion matrix
+
+    :param confuse_mat: `numpy.ndarray` confusion matrix
+    """
+    df_cm = pd.DataFrame(
+        confuse_mat,
+        index=[i for i in range(2, 16)],
+        columns=[i for i in range(2, 16)]
+    )
+    plt.figure(figsize=(10, 7))
+    sn.set(font_scale=1.2)
+    sn.heatmap(df_cm, annot=True)
+    plt.savefig('confuse.png', bbox_inches='tight')
+    plt.close()
 
 
 def main():
@@ -271,11 +284,11 @@ def main():
         (IMAGE_X * IMAGE_Y) + 1, len(classes)))
     weights = weights * 0.01
 
-    weights, avg_J = train_network(train_X, train_labels, weights)
+    weights, avg_j = train_network(train_X, train_labels, weights)
     test_accuracy, confuse_mat = test_network(test_X, test_labels, weights)
+    plot_avg_j(avg_j)
+    plot_confuse(confuse_mat)
     print("Testing Accuracy:", test_accuracy)
-    print("Confusion Matrix:\n", confuse_mat)
-    plot_avg_j(avg_J)
 
 
 if __name__ == "__main__":
