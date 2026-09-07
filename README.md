@@ -38,8 +38,8 @@ Testing Accuracy: `95.24%`
 
 ### Average Log Likelihood:
 
-![](https://github.com/is386/ArtificialNeuron/blob/master/log.png?raw=true)
+![](https://github.com/1nderr/artificial-neuron/blob/master/log.png?raw=true)
 
 ### Confusion Matrix:
 
-![](https://github.com/is386/ArtificialNeuron/blob/master/confuse.png?raw=true)
+![](https://github.com/1nderr/artificial-neuron/blob/master/confuse.png?raw=true)
